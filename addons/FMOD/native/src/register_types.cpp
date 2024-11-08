@@ -59,6 +59,9 @@ void register_fmod_types(ModuleInitializationLevel p_level)
 		ClassDB::register_class<StudioApi::VCA>();
 		ClassDB::register_class<StudioApi::CommandReplay>();
 
+		// Core API
+		ClassDB::register_class<CoreApi::CoreSystem>();
+
 		// FMOD specific types
 		ClassDB::register_class<FmodTypes::FMOD_STUDIO_PARAMETER_ID>();
 		ClassDB::register_class<FmodTypes::FMOD_STUDIO_PARAMETER_DESCRIPTION>();

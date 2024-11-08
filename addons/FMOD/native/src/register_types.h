@@ -8,6 +8,7 @@
 #include <godot_cpp/godot.hpp>
 
 #include "api/studio_api.h"
+#include "api/core_api.h"
 #include "editor/fmod_plugin.h"
 #include "editor/inspector_browser.h"
 #include "editor/project_browser.h"
