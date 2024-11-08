@@ -48,6 +48,8 @@ void register_fmod_types(ModuleInitializationLevel p_level)
 		ClassDB::register_class<FMODSettings>();
 		fmod_settings = memnew(FMODSettings);
 
+		ClassDB::register_class<FMODCoreModule>();
+
 		// Studio API
 		ClassDB::register_class<StudioApi::StudioSystem>();
 		ClassDB::register_class<StudioApi::EventDescription>();

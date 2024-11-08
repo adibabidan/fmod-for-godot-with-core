@@ -15,6 +15,7 @@
 #include "fmod_assets.h"
 #include "fmod_studio_editor_module.h"
 #include "fmod_studio_module.h"
+#include "fmod_core_module.h"
 #include "scene/studio_bank_loader.h"
 #include "scene/studio_event_emitter.h"
 #include "scene/studio_global_parameter_trigger.h"
