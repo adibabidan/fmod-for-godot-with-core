@@ -9,6 +9,7 @@ void FMODStudioModule::_bind_methods()
 	ClassDB::bind_method(D_METHOD("init"), &FMODStudioModule::init);
 	ClassDB::bind_method(D_METHOD("shutdown"), &FMODStudioModule::shutdown);
 	ClassDB::bind_method(D_METHOD("get_studio_system"), &FMODStudioModule::get_studio_system_ref);
+	ClassDB::bind_method(D_METHOD("get_core_system"), &FMODStudioModule::get_core_system_ref);
 
 	BIND_CONSTANT(FMOD_STUDIO_INIT_NORMAL);
 	BIND_CONSTANT(FMOD_STUDIO_INIT_LIVEUPDATE);
@@ -367,6 +368,19 @@ void FMODStudioModule::shutdown()
 Ref<StudioApi::StudioSystem> FMODStudioModule::get_studio_system_ref()
 {
 	return studio_system_ref;
+}
+
+Ref<CoreApi::CoreSystem> FMODStudioModule::get_core_system_ref()
+{
+	FMOD::System* core_system = nullptr;
+	Ref<CoreApi::CoreSystem> ref = create_ref<CoreApi::CoreSystem>();
+	
+	if (ERROR_CHECK(studio_system->getCoreSystem(&core_system)))
+	{
+		ref->set_instance(core_system);
+	}
+
+	return ref;
 }
 
 FMOD::Studio::System* FMODStudioModule::get_studio_system() const
