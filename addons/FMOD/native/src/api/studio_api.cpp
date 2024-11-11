@@ -9,6 +9,7 @@ void StudioSystem::_bind_methods()
 	ClassDB::bind_method(D_METHOD("update"), &StudioSystem::update);
 	ClassDB::bind_method(D_METHOD("flush_commands"), &StudioSystem::flush_commands);
 	ClassDB::bind_method(D_METHOD("flush_sample_loading"), &StudioSystem::flush_sample_loading);
+	ClassDB::bind_method(D_METHOD("get_core_system"), &StudioSystem::get_core_system);
 	ClassDB::bind_method(D_METHOD("get_event", "event_path"), &StudioSystem::get_event);
 	ClassDB::bind_method(D_METHOD("get_bus", "bus_path"), &StudioSystem::get_bus);
 	ClassDB::bind_method(D_METHOD("get_vca", "vca_path"), &StudioSystem::get_vca);
@@ -82,6 +83,19 @@ bool StudioSystem::flush_commands() const
 bool StudioSystem::flush_sample_loading() const
 {
 	return ERROR_CHECK(studio_system->flushSampleLoading());
+}
+
+Ref<CoreSystem> StudioSystem::get_core_system()
+{
+	FMOD::System* core_system = nullptr;
+	Ref<CoreApi::CoreSystem> ref = create_ref<CoreApi::CoreSystem>();
+	
+	if (ERROR_CHECK(studio_system->getCoreSystem(&core_system)))
+	{
+		ref->set_instance(core_system);
+	}
+
+	return ref;
 }
 
 Ref<EventDescription> StudioSystem::get_event(const String& event_path) const
