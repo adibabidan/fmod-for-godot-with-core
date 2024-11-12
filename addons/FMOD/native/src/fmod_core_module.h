@@ -1,6 +1,8 @@
 #ifndef FMOD_CORE_MODULE_H
 #define FMOD_CORE_MODULE_H
 
+#include "api/core_api.h"
+
 class FMODCoreModule : public Object
 {
     GDCLASS(FMODCoreModule, Object);
