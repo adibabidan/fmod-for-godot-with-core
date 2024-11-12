@@ -61,6 +61,10 @@ void register_fmod_types(ModuleInitializationLevel p_level)
 
 		// Core API
 		ClassDB::register_class<CoreApi::CoreSystem>();
+		ClassDB::register_class<CoreApi::Sound>();
+		ClassDB::register_class<CoreApi::Channel>();
+		ClassDB::register_class<CoreApi::ChannelGroup>();
+		ClassDB::register_class<CoreApi::DSP>();
 
 		// FMOD specific types
 		ClassDB::register_class<FmodTypes::FMOD_STUDIO_PARAMETER_ID>();
