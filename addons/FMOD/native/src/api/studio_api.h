@@ -197,7 +197,8 @@ public:
 
 	FMOD_STUDIO_PLAYBACK_STATE get_playback_state() const;
 
-	// note(alex): EventInstance::getChannelGroup not implemented due to missing Core API implementation.
+	Ref<CoreApi::ChannelGroup> get_channel_group() const;
+
 	Dictionary get_min_max_distance() const;
 
 	bool release();
@@ -255,7 +256,7 @@ public:
 	bool lock_channel_group() const;
 	bool unlock_channel_group() const;
 
-	// note(alex): Bus::getChannelGroup not implemented due to missing Core API implementation.
+	Ref<CoreApi::ChannelGroup> get_channel_group() const;
 
 	void get_cpu_usage(Dictionary cpu_usage) const;
 	void get_memory_usage(Ref<FmodTypes::FMOD_STUDIO_MEMORY_USAGE> memory_usage_ref) const;

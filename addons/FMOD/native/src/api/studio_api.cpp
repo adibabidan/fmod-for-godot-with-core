@@ -1270,6 +1270,7 @@ void EventInstance::_bind_methods()
 	ClassDB::bind_method(D_METHOD("get_timeline_position"), &EventInstance::get_timeline_position);
 	ClassDB::bind_method(D_METHOD("set_timeline_position", "position"), &EventInstance::set_timeline_position);
 	ClassDB::bind_method(D_METHOD("get_playback_state"), &EventInstance::get_playback_state);
+	ClassDB::bind_method(D_METHOD("get_channel_group"), &EventInstance::get_channel_group);
 	ClassDB::bind_method(D_METHOD("get_min_max_distance"), &EventInstance::get_min_max_distance);
 	ClassDB::bind_method(D_METHOD("release"), &EventInstance::release);
 	ClassDB::bind_method(D_METHOD("is_virtual"), &EventInstance::is_virtual);
@@ -1495,6 +1496,19 @@ FMOD_STUDIO_PLAYBACK_STATE EventInstance::get_playback_state() const
 	}
 
 	return playback_state;
+}
+
+Ref<CoreApi::ChannelGroup> EventInstance::get_channel_group() const
+{
+	FMOD::ChannelGroup* channel_group = nullptr;
+	Ref<CoreApi::ChannelGroup> ref = create_ref<CoreApi::ChannelGroup>();
+	
+	if (ERROR_CHECK(event_instance->getChannelGroup(&channel_group)))
+	{
+		ref->set_instance(channel_group);
+	}
+
+	return ChannelGroup;
 }
 
 Dictionary EventInstance::get_min_max_distance() const
@@ -1738,6 +1752,7 @@ void Bus::_bind_methods()
 	ClassDB::bind_method(D_METHOD("stop_all_events", "stop_mode"), &Bus::stop_all_events);
 	ClassDB::bind_method(D_METHOD("lock_channel_group"), &Bus::lock_channel_group);
 	ClassDB::bind_method(D_METHOD("unlock_channel_group"), &Bus::unlock_channel_group);
+	ClassDB::bind_method(D_METHOD("get_channel_group"), &Bus::get_channel_group);
 	ClassDB::bind_method(D_METHOD("get_cpu_usage", "cpu_usage"), &Bus::get_cpu_usage);
 	ClassDB::bind_method(D_METHOD("get_memory_usage", "memory_usage"), &Bus::get_memory_usage);
 }
@@ -1842,6 +1857,19 @@ bool Bus::lock_channel_group() const
 bool Bus::unlock_channel_group() const
 {
 	return ERROR_CHECK(bus->unlockChannelGroup());
+}
+
+Ref<CoreApi::ChannelGroup> Bus::get_channel_group() const
+{
+	FMOD::ChannelGroup* channel_group = nullptr;
+	Ref<CoreApi::ChannelGroup> ref = create_ref<CoreApi::ChannelGroup>();
+	
+	if (ERROR_CHECK(bus->getChannelGroup(&channel_group)))
+	{
+		ref->set_instance(channel_group);
+	}
+
+	return ChannelGroup;
 }
 
 void Bus::get_cpu_usage(Dictionary cpu_usage) const
