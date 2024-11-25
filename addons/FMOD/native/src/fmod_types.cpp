@@ -691,4 +691,92 @@ void FMOD_STUDIO_MEMORY_USAGE::get_memory_usage(::FMOD_STUDIO_MEMORY_USAGE& out_
 	out_memory_usage.sampledata = sampledata;
 }
 
+void FMOD_CREATESOUNDEXINFO::_bind_methods()
+{
+	ClassDB::bind_method(D_METHOD("set_cbsize", "cbsize"), &FMOD_STUDIO_MEMORY_USAGE::set_cbsize);
+	ClassDB::bind_method(D_METHOD("get_cbsize"), &FMOD_STUDIO_MEMORY_USAGE::get_cbsize);
+	ClassDB::bind_method(D_METHOD("set_length", "length"), &FMOD_STUDIO_MEMORY_USAGE::set_length);
+	ClassDB::bind_method(D_METHOD("get_length"), &FMOD_STUDIO_MEMORY_USAGE::get_length);
+	ClassDB::bind_method(D_METHOD("set_numchannels", "numchannels"), &FMOD_STUDIO_MEMORY_USAGE::set_numchannels);
+	ClassDB::bind_method(D_METHOD("get_numchannels"), &FMOD_STUDIO_MEMORY_USAGE::get_numchannels);
+	ClassDB::bind_method(D_METHOD("set_defaultfrequency", "defaultfrequency"), &FMOD_STUDIO_MEMORY_USAGE::set_defaultfrequency);
+	ClassDB::bind_method(D_METHOD("get_defaultfrequency"), &FMOD_STUDIO_MEMORY_USAGE::get_defaultfrequency);
+	ClassDB::bind_method(D_METHOD("set_format", "format"), &FMOD_STUDIO_MEMORY_USAGE::set_format);
+	ClassDB::bind_method(D_METHOD("get_format"), &FMOD_STUDIO_MEMORY_USAGE::get_format);
+
+	ADD_PROPERTY(PropertyInfo(Variant::INT, "cbsize"), "set_cbsize", "get_cbsize");
+	ADD_PROPERTY(PropertyInfo(Variant::INT, "length"), "set_length", "get_length");
+	ADD_PROPERTY(PropertyInfo(Variant::INT, "numchannels"), "set_numchannels", "get_numchannels");
+	ADD_PROPERTY(PropertyInfo(Variant::INT, "defaultfrequency"), "set_defaultfrequency", "get_defaultfrequency");
+	ADD_PROPERTY(PropertyInfo(Variant::INT, "format"), "set_format", "get_format");
+}
+
+void set_cbsize(int cbsize)
+{
+	this->cbSize = cbsize;
+}
+
+int get_cbsize() const
+{
+	return cbsize;
+}
+
+void set_length(unsigned int length)
+{
+	this->length = length;
+}
+
+unsigned int get_length() const
+{
+	return length;
+}
+
+void set_numchannels(int numchannels)
+{
+	this->numchannels = numchannels;
+}
+
+int get_numchannels() const
+{
+	return numchannels;
+}
+
+void set_defaultfrequency(int defaultfrequency)
+{
+	this->defaultfrequency = defaultfrequency;
+}
+
+int get_defaultfrequency() const
+{
+	return defaultfrequency;
+}
+
+void set_format(FMOD_SOUND_FORMAT format)
+{
+	this->format = format;
+}
+
+FMOD_SOUND_FORMAT get_format() const
+{
+	return format;
+}
+
+void set_createsoundexinfo(const ::FMOD_STUDIO_MEMORY_USAGE& createsoundexinfo)
+{
+	cbsize = createsoundexinfo.cbsize
+	length = createsoundexinfo.length
+	numchannels = createsoundexinfo.numchannels
+	defaultfrequency = createsoundexinfo.defaultfrequency
+	format = createsoundexinfo.format
+}
+
+void get_createsoundexinfo(::FMOD_STUDIO_MEMORY_USAGE& out_createsoundexinfo) const
+{
+	out_createsoundexinfo.cbsize = cbsize
+	out_createsoundexinfo.length = length
+	out_createsoundexinfo.numchannels = numchannels
+	out_createsoundexinfo.defaultfrequency = defaultfrequency
+	out_createsoundexinfo.format = format
+}
+
 } // namespace FmodTypes

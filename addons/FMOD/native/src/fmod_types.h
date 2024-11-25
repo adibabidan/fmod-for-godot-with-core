@@ -255,5 +255,68 @@ public:
 	void get_memory_usage(::FMOD_STUDIO_MEMORY_USAGE& out_memory_usage) const;
 };
 
+class FMOD_CREATESOUNDEXINFO : public RefCounted
+{
+	GDCLASS(FMOD_CREATESOUNDEXINFO, RefCounted)
+
+protected:
+	static void _bind_methods();
+
+private:
+	int cbsize{};
+	unsigned int length{};
+	// unsigned int fileOffset{};
+	int numchannels{};
+	int defaultfrequency{};
+	FMOD_SOUND_FORMAT format{};
+	/*
+	unsigned int decodeBufferSize{};
+	int initialSubsound{};
+	int numSubsounds{};
+	int *inclusionList{};
+	int inclusionListNum{};
+	FMOD_SOUND_PCMREAD_CALLBACK pcmReadCallback{};
+	FMOD_SOUND_PCMSETPOS_CALLBACK pcmSetPosCallback{};
+	FMOD_SOUND_NONBLOCK_CALLBACK nonblockCallback{};
+	const char *dlsName{};
+	const char *encryptionKey{};
+	int maxPolyphony{};
+	void *userData{};
+	FMOD_SOUND_TYPE suggestedSoundType{};
+	FMOD_FILE_OPEN_CALLBACK fileUserOpen{};
+	FMOD_FILE_CLOSE_CALLBACK fileUserClose{};
+	FMOD_FILE_READ_CALLBACK fileUserRead{};
+	FMOD_FILE_SEEK_CALLBACK fileUserSeek{};
+	FMOD_FILE_ASYNCREAD_CALLBACK fileUserAsyncRead{};
+	FMOD_FILE_ASYNCCANCEL_CALLBACK fileUserAsyncCancel{};
+	void *fileUserData{};
+	int fileBufferSize{};
+	FMOD_CHANNELORDER channelOrder{};
+	FMOD_SOUNDGROUP *initialSoundGroup{};
+	unsigned int initialSeekPosition{};
+	FMOD_TIMEUNIT initialSeekPosType{};
+	int ignoreSetFileSystem{};
+	unsigned int audioQueuePolicy{};
+	unsigned int minMidiGranularity{};
+	int nonblockThreadId{};
+	FMOD_GUID *fsbguid{};
+	*/
+
+public:
+	void set_cbsize(int cbsize);
+	int get_cbsize() const;
+	void set_length(unsigned int length);
+	unsigned int get_length() const;
+	void set_numchannels(int numchannels);
+	int get_numchannels() const;
+	void set_defaultfrequency(int defaultfrequency);
+	int get_defaultfrequency() const;
+	void set_format(FMOD_SOUND_FORMAT format);
+	FMOD_SOUND_FORMAT get_format() const;
+
+	void set_createsoundexinfo(const ::FMOD_STUDIO_MEMORY_USAGE& createsoundexinfo);
+	void get_createsoundexinfo(::FMOD_STUDIO_MEMORY_USAGE& out_createsoundexinfo) const;
+};
+
 } //namespace FmodTypes
 #endif // FMOD_TYPES_H

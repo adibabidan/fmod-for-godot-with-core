@@ -83,4 +83,6 @@ public:
     void set_instance(FMOD::DSP* dsp);
 };
 
-}
+} // namespace CoreApi
+
+#endif // CORE_API
