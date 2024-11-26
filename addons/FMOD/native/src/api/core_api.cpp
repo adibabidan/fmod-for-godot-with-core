@@ -30,6 +30,18 @@ Ref<Sound> CoreSystem::create_sound(const String& name_or_data, FMOD_MODE mode, 
     return ref;
 }
 
+Dictionary CoreSystem::get_record_num_drivers()
+{
+    Dictionary record_num_drivers;
+
+    int available{}, connected{};
+    ERROR_CHECK(core_system->getRecordNumDrivers(&available, &connected));
+    record_num_drivers["available"] = available;
+    record_num_drivers["connected"] = connected;
+
+    return record_num_drivers;
+}
+
 bool CoreSystem::record_start(int id, const Ref<Sound>& sound, bool loop) const
 {
     return ERROR_CHECK(core_system->recordStart(id, sound->get_instance(), loop));

@@ -27,6 +27,7 @@ public:
     void set_instance(FMOD::System* core_system);
 
     Ref<Sound> create_sound(const String& name_or_data, FMOD_MODE mode, const Ref<FmodTypes::FMOD_CREATESOUNDEXINFO>& exinfo) const;
+    Dictionary get_record_num_drivers() const;
     bool record_start(int id, const Ref<Sound>& sound, bool loop) const;
     bool record_stop(int id) const;
 };
