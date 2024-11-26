@@ -25,6 +25,8 @@ private:
 
 public:
     void set_instance(FMOD::System* core_system);
+
+    Ref<Sound> create_sound(const char *name_or_data, FMOD_MODE mode, const Ref<FmodTypes::FMOD_CREATESOUNDEXINFO>& exinfo) const;
 };
 
 class Sound
