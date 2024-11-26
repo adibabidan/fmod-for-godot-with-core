@@ -115,7 +115,9 @@ bool Sound::release() const
 
 void Channel::_bind_methods()
 {
-
+    ClassDB::bind_method(D_METHOD("set_frequency", "frequency"), &Channel::set_frequency);
+    ClassDB::bind_method(D_METHOD("set_paused", "paused"), &Channel::set_paused);
+    ClassDB::bind_method(D_METHOD("get_dsp", "index"), &Channel::get_dsp);
 }
 
 void Channel::set_instance(FMOD::Channel* channel)
@@ -123,14 +125,56 @@ void Channel::set_instance(FMOD::Channel* channel)
     this->channel = channel;
 }
 
+bool Channel::set_frequency(float frequency) const
+{
+    return ERROR_CHECK(channel->setFrequency(frequency));
+}
+
+bool Channel::set_paused(bool paused) const
+{
+    return ERROR_CHECK(channel->setPaused(paused));
+}
+
+Ref<DSP> Channel::get_dsp(int index) const
+{
+    FMOD::DSP* dsp = nullptr;
+    Ref<DSP> ref = create_ref<DSP>();
+
+    if(ERROR_CHECK(channel->getDSP(index, &dsp)))
+    {
+        ref->set_instance(dsp);
+    }
+
+    return ref;
+}
+
 void ChannelGroup::_bind_methods()
 {
-
+    ClassDB::bind_method(D_METHOD("set_paused", "paused"), &ChannelGroup::set_paused);
+    ClassDB::bind_method(D_METHOD("get_dsp", "index"), &ChannelGroup::get_dsp);
 }
 
 void ChannelGroup::set_instance(FMOD::ChannelGroup* channel_group)
 {
     this->channel_group = channel_group;
+}
+
+bool ChannelGroup::set_paused(bool paused) const
+{
+    return ERROR_CHECK(channel_group->setPaused(paused));
+}
+
+Ref<DSP> ChannelGroup::get_dsp(int index) const
+{
+    FMOD::DSP* dsp = nullptr;
+    Ref<DSP> ref = create_ref<DSP>();
+
+    if(ERROR_CHECK(channel_group->getDSP(index, &dsp)))
+    {
+        ref->set_instance(dsp);
+    }
+
+    return ref;
 }
 
 void DSP::_bind_methods()

@@ -7,8 +7,6 @@ namespace CoreApi
 {
 
 class Sound;
-// note(aidan): i don't know c++ well enough to figure out how to port this ChannelControl abstraction over naturally
-//              so just be wary that you might have to fix some bugs twice.
 class Channel;
 class ChannelGroup;
 class DSP;
@@ -65,6 +63,10 @@ private:
 
 public:
     void set_instance(FMOD::Channel* channel);
+
+    bool set_frequency(float frequency) const;
+    bool set_paused(bool paused) const;
+    Ref<DSP> get_dsp(int index) const;
 };
 
 class ChannelGroup
@@ -79,6 +81,12 @@ private:
 
 public:
     void set_instance(FMOD::ChannelGroup* channel_group);
+
+    // note(aidan): i don't know c++ well enough to figure out how to port this ChannelControl abstraction over naturally
+    //              so just be wary that you might have to fix some bugs twice.
+
+    bool set_paused(bool paused) const;
+    Ref<DSP> get_dsp(int index) const;
 };
 
 class DSP
