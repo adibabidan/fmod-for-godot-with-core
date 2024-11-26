@@ -263,7 +263,7 @@ protected:
 	static void _bind_methods();
 
 private:
-	int cbsize{};
+	// int cbsize{};
 	unsigned int length{};
 	// unsigned int fileOffset{};
 	int numchannels{};
@@ -303,8 +303,8 @@ private:
 	*/
 
 public:
-	void set_cbsize(int cbsize);
-	int get_cbsize() const;
+	// void set_cbsize(int cbsize);
+	// int get_cbsize() const;
 	void set_length(unsigned int length);
 	unsigned int get_length() const;
 	void set_numchannels(int numchannels);
@@ -314,9 +314,36 @@ public:
 	void set_format(FMOD_SOUND_FORMAT format);
 	FMOD_SOUND_FORMAT get_format() const;
 
-	void set_createsoundexinfo(const ::FMOD_STUDIO_MEMORY_USAGE& createsoundexinfo);
-	void get_createsoundexinfo(::FMOD_STUDIO_MEMORY_USAGE& out_createsoundexinfo) const;
+	void set_createsoundexinfo(const ::FMOD_CREATESOUNDEXINFO& createsoundexinfo);
+	void get_createsoundexinfo(::FMOD_CREATESOUNDEXINFO& out_createsoundexinfo) const;
 };
+
+class FMOD_DSP_METERING_INFO : public RefCounted
+{
+	GDCLASS(FMOD_DSP_METERING_INFO, RefCounted)
+
+protected:
+	static void _bind_methods();
+
+private:
+	int numsamples{};
+	float peaklevel[32]{};
+	float rmslevel[32]{};
+	short numchannels{};
+
+public:
+	void set_numsamples(int numsamples);
+	int get_numsamples() const;
+
+	float get_peaklevel(int index) const;
+	float get_rmslevel(int index) const;
+
+	void set_numchannels(int numchannels);
+	int get_numchannels() const;
+
+	void set_fmod_dsp_metering_info(const ::FMOD_DSP_METERING_INFO& createsoundexinfo);
+	void get_fmod_dsp_metering_info(::FMOD_DSP_METERING_INFO& createsoundexinfo) const;
+}
 
 } //namespace FmodTypes
 #endif // FMOD_TYPES_H

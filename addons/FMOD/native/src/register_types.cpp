@@ -77,7 +77,7 @@ void register_fmod_types(ModuleInitializationLevel p_level)
 		ClassDB::register_class<FmodTypes::FMOD_STUDIO_MEMORY_USAGE>();
 		ClassDB::register_class<FmodTypes::FMOD_STUDIO_USER_PROPERTY>();
 		ClassDB::register_class<FmodTypes::FMOD_CREATESOUNDEXINFO>();
-
+		ClassDB::register_class<FmodTypes::FMOD_DSP_METERING_INFO>();
 
 		// FMOD Resources
 		ClassDB::register_class<FMODAsset>();

@@ -101,6 +101,8 @@ private:
 
 public:
     void set_instance(FMOD::DSP* dsp);
+
+    Dictionary get_metering_info() const;
 };
 
 } // namespace CoreApi

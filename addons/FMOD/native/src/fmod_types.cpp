@@ -693,24 +693,24 @@ void FMOD_STUDIO_MEMORY_USAGE::get_memory_usage(::FMOD_STUDIO_MEMORY_USAGE& out_
 
 void FMOD_CREATESOUNDEXINFO::_bind_methods()
 {
-	ClassDB::bind_method(D_METHOD("set_cbsize", "cbsize"), &FMOD_STUDIO_MEMORY_USAGE::set_cbsize);
-	ClassDB::bind_method(D_METHOD("get_cbsize"), &FMOD_STUDIO_MEMORY_USAGE::get_cbsize);
-	ClassDB::bind_method(D_METHOD("set_length", "length"), &FMOD_STUDIO_MEMORY_USAGE::set_length);
-	ClassDB::bind_method(D_METHOD("get_length"), &FMOD_STUDIO_MEMORY_USAGE::get_length);
-	ClassDB::bind_method(D_METHOD("set_numchannels", "numchannels"), &FMOD_STUDIO_MEMORY_USAGE::set_numchannels);
-	ClassDB::bind_method(D_METHOD("get_numchannels"), &FMOD_STUDIO_MEMORY_USAGE::get_numchannels);
-	ClassDB::bind_method(D_METHOD("set_defaultfrequency", "defaultfrequency"), &FMOD_STUDIO_MEMORY_USAGE::set_defaultfrequency);
-	ClassDB::bind_method(D_METHOD("get_defaultfrequency"), &FMOD_STUDIO_MEMORY_USAGE::get_defaultfrequency);
-	ClassDB::bind_method(D_METHOD("set_format", "format"), &FMOD_STUDIO_MEMORY_USAGE::set_format);
-	ClassDB::bind_method(D_METHOD("get_format"), &FMOD_STUDIO_MEMORY_USAGE::get_format);
+	// ClassDB::bind_method(D_METHOD("set_cbsize", "cbsize"), &FMOD_CREATESOUNDEXINFO::set_cbsize);
+	// ClassDB::bind_method(D_METHOD("get_cbsize"), &FMOD_CREATESOUNDEXINFO::get_cbsize);
+	ClassDB::bind_method(D_METHOD("set_length", "length"), &FMOD_CREATESOUNDEXINFO::set_length);
+	ClassDB::bind_method(D_METHOD("get_length"), &FMOD_CREATESOUNDEXINFO::get_length);
+	ClassDB::bind_method(D_METHOD("set_numchannels", "numchannels"), &FMOD_CREATESOUNDEXINFO::set_numchannels);
+	ClassDB::bind_method(D_METHOD("get_numchannels"), &FMOD_CREATESOUNDEXINFO::get_numchannels);
+	ClassDB::bind_method(D_METHOD("set_defaultfrequency", "defaultfrequency"), &FMOD_CREATESOUNDEXINFO::set_defaultfrequency);
+	ClassDB::bind_method(D_METHOD("get_defaultfrequency"), &FMOD_CREATESOUNDEXINFO::get_defaultfrequency);
+	ClassDB::bind_method(D_METHOD("set_format", "format"), &FMOD_CREATESOUNDEXINFO::set_format);
+	ClassDB::bind_method(D_METHOD("get_format"), &FMOD_CREATESOUNDEXINFO::get_format);
 
-	ADD_PROPERTY(PropertyInfo(Variant::INT, "cbsize"), "set_cbsize", "get_cbsize");
+	// ADD_PROPERTY(PropertyInfo(Variant::INT, "cbsize"), "set_cbsize", "get_cbsize");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "length"), "set_length", "get_length");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "numchannels"), "set_numchannels", "get_numchannels");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "defaultfrequency"), "set_defaultfrequency", "get_defaultfrequency");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "format"), "set_format", "get_format");
 }
-
+/*
 void FMOD_CREATESOUNDEXINFO::set_cbsize(int cbsize)
 {
 	this->cbSize = cbsize;
@@ -720,7 +720,7 @@ int FMOD_CREATESOUNDEXINFO::get_cbsize() const
 {
 	return cbsize;
 }
-
+*/
 void FMOD_CREATESOUNDEXINFO::set_length(unsigned int length)
 {
 	this->length = length;
@@ -761,22 +761,80 @@ FMOD_SOUND_FORMAT FMOD_CREATESOUNDEXINFO::get_format() const
 	return format;
 }
 
-void FMOD_CREATESOUNDEXINFO::set_createsoundexinfo(const ::FMOD_STUDIO_MEMORY_USAGE& createsoundexinfo)
+void FMOD_CREATESOUNDEXINFO::set_createsoundexinfo(const ::FMOD_CREATESOUNDEXINFO& createsoundexinfo)
 {
-	cbsize = createsoundexinfo.cbsize
-	length = createsoundexinfo.length
-	numchannels = createsoundexinfo.numchannels
-	defaultfrequency = createsoundexinfo.defaultfrequency
-	format = createsoundexinfo.format
+	length = createsoundexinfo.length;
+	numchannels = createsoundexinfo.numchannels;
+	defaultfrequency = createsoundexinfo.defaultfrequency;
+	format = createsoundexinfo.format;
 }
 
-void FMOD_CREATESOUNDEXINFO::get_createsoundexinfo(::FMOD_STUDIO_MEMORY_USAGE& out_createsoundexinfo) const
+void FMOD_CREATESOUNDEXINFO::get_createsoundexinfo(::FMOD_CREATESOUNDEXINFO& out_createsoundexinfo) const
 {
-	out_createsoundexinfo.cbsize = cbsize
-	out_createsoundexinfo.length = length
-	out_createsoundexinfo.numchannels = numchannels
-	out_createsoundexinfo.defaultfrequency = defaultfrequency
-	out_createsoundexinfo.format = format
+	out_createsoundexinfo.cbsize = sizeof(::FMOD_CREATESOUNDEXINFO);
+	out_createsoundexinfo.length = length;
+	out_createsoundexinfo.numchannels = numchannels;
+	out_createsoundexinfo.defaultfrequency = defaultfrequency;
+	out_createsoundexinfo.format = format;
+}
+
+void FMOD_DSP_METERING_INFO::_bind_methods()
+{
+	ClassDB::bind_method(D_METHOD("set_numsamples", "numsamples"), &FMOD_DSP_METERING_INFO::set_numsamples);
+	ClassDB::bind_method(D_METHOD("get_numsamples"), &FMOD_DSP_METERING_INFO::get_numsamples);
+	ClassDB::bind_method(D_METHOD("get_peaklevel", "index"), &FMOD_DSP_METERING_INFO::get_peaklevel);
+	ClassDB::bind_method(D_METHOD("get_rmslevel", "index"), &FMOD_DSP_METERING_INFO::get_rmslevel);
+	ClassDB::bind_method(D_METHOD("set_numchannels", "numchannels"), &FMOD_DSP_METERING_INFO::set_numchannels);
+	ClassDB::bind_method(D_METHOD("get_numchannels"), &FMOD_DSP_METERING_INFO::get_numchannels);
+
+	ADD_PROPERTY(PropertyInfo(Variant::INT, "numsamples"), "set_numsamples", "get_numsamples");
+	ADD_PROPERTY(PropertyInfo(Variant::INT, "numchannels"), "set_numchannels", "get_numchannels");
+}
+
+void FMOD_DSP_METERING_INFO::set_numsamples(int numsamples)
+{
+	this->numsamples = numsamples;
+}
+
+int FMOD_DSP_METERING_INFO::get_numsamples() const;
+{
+	return numsamples;
+}
+
+float FMOD_DSP_METERING_INFO::get_peaklevel(int index) const;
+{
+	return peaklevel[index]
+}
+
+float FMOD_DSP_METERING_INFO::get_rmslevel(int index) const;
+{
+	return rmslevel[index]
+}
+
+void FMOD_DSP_METERING_INFO::set_numchannels(int numchannels);
+{
+	this->numchannels = numchannels;
+}
+
+int FMOD_DSP_METERING_INFO::get_numchannels() const;
+{
+	return numchannels;
+}
+
+void set_fmod_dsp_metering_info(const ::FMOD_DSP_METERING_INFO& fmod_dsp_metering_info);
+{
+	numsamples = fmod_dsp_metering_info.numsamples;
+	peaklevel = fmod_dsp_metering_info.peaklevel;
+	rmslevel = fmod_dsp_metering_info.rmslevel;
+	numchannels = fmod_dsp_metering_info.numchannels;
+}
+
+void get_fmod_dsp_metering_info(::FMOD_DSP_METERING_INFO& out_fmod_dsp_metering_info) const;
+{
+	out_fmod_dsp_metering_info.numsamples = numsamples;
+	out_fmod_dsp_metering_info.peaklevel = peaklevel;
+	out_fmod_dsp_metering_info.rmslevel = rmslevel;
+	out_fmod_dsp_metering_info.numchannels = numchannels;
 }
 
 } // namespace FmodTypes
