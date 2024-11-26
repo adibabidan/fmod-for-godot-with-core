@@ -28,6 +28,9 @@ public:
 
     Ref<Sound> create_sound(const String& name_or_data, FMOD_MODE mode, const Ref<FmodTypes::FMOD_CREATESOUNDEXINFO>& exinfo) const;
     Dictionary get_record_num_drivers() const;
+    // abstracting getRecordDriverInfo() into multiple functions thanks to it's rather intense use of out parameters
+    String get_record_driver_name(int id) const;
+    Dictionary get_record_driver_rate_and_channels(int id) const;
     bool record_start(int id, const Ref<Sound>& sound, bool loop) const;
     bool record_stop(int id) const;
 };

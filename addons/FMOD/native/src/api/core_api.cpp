@@ -5,6 +5,8 @@ using namespace CoreApi;
 void CoreSystem::_bind_methods()
 {
     ClassDB::bind_method(D_METHOD("create_sound", "name_or_data", "mode", "exinfo"), &CoreSystem::create_sound);
+    ClassDB::bind_method(D_METHOD("get_record_driver_name", "id", "namelen"), &CoreSystem::get_record_driver_name);
+    ClassDB::bind_method(D_METHOD("get_record_driver_rate_and_channels", "id"), &CoreSystem::get_record_driver_rate_and_channels);
     ClassDB::bind_method(D_METHOD("record_start", "id", "sound", "loop"), &CoreSystem::record_start);
     ClassDB::bind_method(D_METHOD("record_stop", "id"), &CoreSystem::record_stop);
 }
@@ -40,6 +42,32 @@ Dictionary CoreSystem::get_record_num_drivers()
     record_num_drivers["connected"] = connected;
 
     return record_num_drivers;
+}
+
+String CoreSystem::get_record_driver_name(int id, int namelen)
+{
+    String name;
+    char buffer[namelen];
+    if(ERROR_CHECK(core_system->getRecordDriverInfo(id, &buffer, namelen, NULL, NULL, NULL, NULL, NULL)))
+    {
+        name.assign(buffer, namelen);
+    }
+
+    return name;
+}
+
+Dictionary CoreSystem::get_record_driver_rate_and_channels(int id)
+{
+    Dictionary record_driver_info;
+    int native_rate;
+    int native_channels;
+    if(ERROR_CHECK(core_system->getRecordDriverInfo(id, NULL, 0, NULL, &native_rate, NULL, &native_channels, NULL)))
+    {
+        record_driver_info["rate"] = native_rate;
+        record_driver_info["channels"] = native_channels;
+    }
+
+    return record_driver_info;
 }
 
 bool CoreSystem::record_start(int id, const Ref<Sound>& sound, bool loop) const
