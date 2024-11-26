@@ -48,6 +48,9 @@ private:
 public:
     void set_instance(FMOD::Sound* sound);
     FMOD::Sound* get_instance() const;
+
+    unsigned int get_length(FMOD_TIMEUNIT lengthtype) const;
+    bool release() const;
 };
 
 class Channel

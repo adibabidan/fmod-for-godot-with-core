@@ -82,7 +82,8 @@ bool CoreSystem::record_stop(int id) const
 
 void Sound::_bind_methods()
 {
-
+    ClassDB::bind_method(D_METHOD("get_length", "lengthtype"), &Sound::get_length);
+    ClassDB::bind_method(D_METHOD("release"), &Sound::release);
 }
 
 void Sound::set_instance(FMOD::Sound* sound)
@@ -93,6 +94,23 @@ void Sound::set_instance(FMOD::Sound* sound)
 FMOD::Sound* Sound::get_instance()
 {
     return sound;
+}
+
+unsigned int Sound::get_length(FMOD_TIMEUNIT lengthtype) const
+{
+    unsigned int length{};
+
+    if(ERROR_CHECK(sound->getLength(&length, lengthtype)))
+    {
+        return length;
+    }
+
+    return length;
+}
+
+bool Sound::release() const
+{
+    return ERROR_CHECK(sound->release());
 }
 
 void Channel::_bind_methods()
