@@ -26,7 +26,9 @@ private:
 public:
     void set_instance(FMOD::System* core_system);
 
-    Ref<Sound> create_sound(const char *name_or_data, FMOD_MODE mode, const Ref<FmodTypes::FMOD_CREATESOUNDEXINFO>& exinfo) const;
+    Ref<Sound> create_sound(const String& name_or_data, FMOD_MODE mode, const Ref<FmodTypes::FMOD_CREATESOUNDEXINFO>& exinfo) const;
+    bool record_start(int id, const Ref<Sound>& sound, bool loop) const;
+    bool record_stop(int id) const;
 };
 
 class Sound
@@ -41,6 +43,7 @@ private:
 
 public:
     void set_instance(FMOD::Sound* sound);
+    FMOD::Sound* get_instance() const;
 };
 
 class Channel

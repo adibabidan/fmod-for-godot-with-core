@@ -711,57 +711,57 @@ void FMOD_CREATESOUNDEXINFO::_bind_methods()
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "format"), "set_format", "get_format");
 }
 
-void set_cbsize(int cbsize)
+void FMOD_CREATESOUNDEXINFO::set_cbsize(int cbsize)
 {
 	this->cbSize = cbsize;
 }
 
-int get_cbsize() const
+int FMOD_CREATESOUNDEXINFO::get_cbsize() const
 {
 	return cbsize;
 }
 
-void set_length(unsigned int length)
+void FMOD_CREATESOUNDEXINFO::set_length(unsigned int length)
 {
 	this->length = length;
 }
 
-unsigned int get_length() const
+unsigned int FMOD_CREATESOUNDEXINFO::get_length() const
 {
 	return length;
 }
 
-void set_numchannels(int numchannels)
+void FMOD_CREATESOUNDEXINFO::set_numchannels(int numchannels)
 {
 	this->numchannels = numchannels;
 }
 
-int get_numchannels() const
+int FMOD_CREATESOUNDEXINFO::get_numchannels() const
 {
 	return numchannels;
 }
 
-void set_defaultfrequency(int defaultfrequency)
+void FMOD_CREATESOUNDEXINFO::set_defaultfrequency(int defaultfrequency)
 {
 	this->defaultfrequency = defaultfrequency;
 }
 
-int get_defaultfrequency() const
+int FMOD_CREATESOUNDEXINFO::get_defaultfrequency() const
 {
 	return defaultfrequency;
 }
 
-void set_format(FMOD_SOUND_FORMAT format)
+void FMOD_CREATESOUNDEXINFO::set_format(FMOD_SOUND_FORMAT format)
 {
 	this->format = format;
 }
 
-FMOD_SOUND_FORMAT get_format() const
+FMOD_SOUND_FORMAT FMOD_CREATESOUNDEXINFO::get_format() const
 {
 	return format;
 }
 
-void set_createsoundexinfo(const ::FMOD_STUDIO_MEMORY_USAGE& createsoundexinfo)
+void FMOD_CREATESOUNDEXINFO::set_createsoundexinfo(const ::FMOD_STUDIO_MEMORY_USAGE& createsoundexinfo)
 {
 	cbsize = createsoundexinfo.cbsize
 	length = createsoundexinfo.length
@@ -770,7 +770,7 @@ void set_createsoundexinfo(const ::FMOD_STUDIO_MEMORY_USAGE& createsoundexinfo)
 	format = createsoundexinfo.format
 }
 
-void get_createsoundexinfo(::FMOD_STUDIO_MEMORY_USAGE& out_createsoundexinfo) const
+void FMOD_CREATESOUNDEXINFO::get_createsoundexinfo(::FMOD_STUDIO_MEMORY_USAGE& out_createsoundexinfo) const
 {
 	out_createsoundexinfo.cbsize = cbsize
 	out_createsoundexinfo.length = length
