@@ -708,7 +708,6 @@ void FMOD_CREATESOUNDEXINFO::_bind_methods()
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "length"), "set_length", "get_length");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "numchannels"), "set_numchannels", "get_numchannels");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "defaultfrequency"), "set_defaultfrequency", "get_defaultfrequency");
-	ADD_PROPERTY(PropertyInfo(Variant::INT, "format"), "set_format", "get_format");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "format", PROPERTY_HINT_ENUM,
 						 "FMOD_SOUND_FORMAT_NONE,FMOD_SOUND_FORMAT_PCM8,FMOD_SOUND_FORMAT_PCM16,FMOD_SOUND_FORMAT_PCM24,"
 						 "FMOD_SOUND_FORMAT_PCM32,FMOD_SOUND_FORMAT_PCMFLOAT,FMOD_SOUND_FORMAT_BITSTREAM,FMOD_SOUND_FORMAT_MAX"),

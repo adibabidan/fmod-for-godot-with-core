@@ -5,9 +5,11 @@ using namespace CoreApi;
 void CoreSystem::_bind_methods()
 {
     ClassDB::bind_method(D_METHOD("create_sound", "name_or_data", "mode", "exinfo"), &CoreSystem::create_sound);
+    ClassDB::bind_method(D_METHOD("play_sound", "sound", "channel_group", "paused"), &CoreSystem::play_sound);
     ClassDB::bind_method(D_METHOD("get_record_num_drivers"), &CoreSystem::get_record_num_drivers);
     ClassDB::bind_method(D_METHOD("get_record_driver_name", "id", "namelen"), &CoreSystem::get_record_driver_name);
     ClassDB::bind_method(D_METHOD("get_record_driver_rate_and_channels", "id"), &CoreSystem::get_record_driver_rate_and_channels);
+    ClassDB::bind_method(D_METHOD("get_record_position", "id"), &CoreSystem::get_record_position);
     ClassDB::bind_method(D_METHOD("record_start", "id", "sound", "loop"), &CoreSystem::record_start);
     ClassDB::bind_method(D_METHOD("record_stop", "id"), &CoreSystem::record_stop);
 }
@@ -28,6 +30,19 @@ Ref<Sound> CoreSystem::create_sound(const String& name_or_data, FMOD_MODE mode, 
     if (ERROR_CHECK(core_system->createSound(name_or_data.utf8().get_data(), mode, &info, &sound)))
     {
         ref->set_instance(sound);
+    }
+
+    return ref;
+}
+
+Ref<Channel> CoreSystem::play_sound(const Ref<Sound>& sound, const Ref<ChannelGroup>& channel_group, bool paused) const
+{
+    FMOD::Channel* channel = nullptr;
+    Ref<Channel> ref = create_ref<Channel>();
+
+    if(ERROR_CHECK(core_system->playSound(sound->get_instance(), 0, paused, &channel)))
+    {
+        ref->set_instance(channel);
     }
 
     return ref;
@@ -70,6 +85,16 @@ Dictionary CoreSystem::get_record_driver_rate_and_channels(int id) const
     }
 
     return record_driver_info;
+}
+
+unsigned int CoreSystem::get_record_position(int id) const
+{
+    unsigned int position = 0;
+    if(ERROR_CHECK(core_system->getRecordPosition(id, &position)))
+    {
+        return position;
+    }
+    return position;
 }
 
 bool CoreSystem::record_start(int id, const Ref<Sound>& sound, bool loop) const
@@ -159,6 +184,11 @@ void ChannelGroup::_bind_methods()
 void ChannelGroup::set_instance(FMOD::ChannelGroup* channel_group)
 {
     this->channel_group = channel_group;
+}
+
+FMOD::ChannelGroup* ChannelGroup::get_instance() const
+{
+    return channel_group;
 }
 
 bool ChannelGroup::set_paused(bool paused) const
