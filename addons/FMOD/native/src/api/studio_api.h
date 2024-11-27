@@ -34,7 +34,7 @@ public:
 	bool flush_commands() const;
 	bool flush_sample_loading() const;
 
-	Ref<CoreSystem> get_core_system() const;
+	Ref<CoreApi::CoreSystem> get_core_system() const;
 
 	Ref<EventDescription> get_event(const String& event_path) const;
 	Ref<Bus> get_bus(const String& bus_path) const;

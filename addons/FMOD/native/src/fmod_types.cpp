@@ -709,6 +709,10 @@ void FMOD_CREATESOUNDEXINFO::_bind_methods()
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "numchannels"), "set_numchannels", "get_numchannels");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "defaultfrequency"), "set_defaultfrequency", "get_defaultfrequency");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "format"), "set_format", "get_format");
+	ADD_PROPERTY(PropertyInfo(Variant::INT, "format", PROPERTY_HINT_ENUM,
+						 "FMOD_SOUND_FORMAT_NONE,FMOD_SOUND_FORMAT_PCM8,FMOD_SOUND_FORMAT_PCM16,FMOD_SOUND_FORMAT_PCM24,"
+						 "FMOD_SOUND_FORMAT_PCM32,FMOD_SOUND_FORMAT_PCMFLOAT,FMOD_SOUND_FORMAT_BITSTREAM,FMOD_SOUND_FORMAT_MAX"),
+			"set_format", "get_format");
 }
 /*
 void FMOD_CREATESOUNDEXINFO::set_cbsize(int cbsize)
@@ -751,14 +755,14 @@ int FMOD_CREATESOUNDEXINFO::get_defaultfrequency() const
 	return defaultfrequency;
 }
 
-void FMOD_CREATESOUNDEXINFO::set_format(FMOD_SOUND_FORMAT format)
+void FMOD_CREATESOUNDEXINFO::set_format(int format)
 {
-	this->format = format;
+	this->format = (FMOD_SOUND_FORMAT)format;
 }
 
-FMOD_SOUND_FORMAT FMOD_CREATESOUNDEXINFO::get_format() const
+int FMOD_CREATESOUNDEXINFO::get_format() const
 {
-	return format;
+	return (int)format;
 }
 
 void FMOD_CREATESOUNDEXINFO::set_createsoundexinfo(const ::FMOD_CREATESOUNDEXINFO& createsoundexinfo)
@@ -796,44 +800,44 @@ void FMOD_DSP_METERING_INFO::set_numsamples(int numsamples)
 	this->numsamples = numsamples;
 }
 
-int FMOD_DSP_METERING_INFO::get_numsamples() const;
+int FMOD_DSP_METERING_INFO::get_numsamples() const
 {
 	return numsamples;
 }
 
-float FMOD_DSP_METERING_INFO::get_peaklevel(int index) const;
+float FMOD_DSP_METERING_INFO::get_peaklevel(int index) const
 {
-	return peaklevel[index]
+	return peaklevel[index];
 }
 
-float FMOD_DSP_METERING_INFO::get_rmslevel(int index) const;
+float FMOD_DSP_METERING_INFO::get_rmslevel(int index) const
 {
-	return rmslevel[index]
+	return rmslevel[index];
 }
 
-void FMOD_DSP_METERING_INFO::set_numchannels(int numchannels);
+void FMOD_DSP_METERING_INFO::set_numchannels(int numchannels)
 {
 	this->numchannels = numchannels;
 }
 
-int FMOD_DSP_METERING_INFO::get_numchannels() const;
+int FMOD_DSP_METERING_INFO::get_numchannels() const
 {
 	return numchannels;
 }
 
-void set_fmod_dsp_metering_info(const ::FMOD_DSP_METERING_INFO& fmod_dsp_metering_info);
+void FMOD_DSP_METERING_INFO::set_fmod_dsp_metering_info(const ::FMOD_DSP_METERING_INFO& fmod_dsp_metering_info)
 {
 	numsamples = fmod_dsp_metering_info.numsamples;
-	peaklevel = fmod_dsp_metering_info.peaklevel;
-	rmslevel = fmod_dsp_metering_info.rmslevel;
+	std::copy(fmod_dsp_metering_info.peaklevel, fmod_dsp_metering_info.peaklevel + 32, peaklevel);
+	std::copy(fmod_dsp_metering_info.rmslevel, fmod_dsp_metering_info.rmslevel + 32, rmslevel);
 	numchannels = fmod_dsp_metering_info.numchannels;
 }
 
-void get_fmod_dsp_metering_info(::FMOD_DSP_METERING_INFO& out_fmod_dsp_metering_info) const;
+void FMOD_DSP_METERING_INFO::get_fmod_dsp_metering_info(::FMOD_DSP_METERING_INFO& out_fmod_dsp_metering_info) const
 {
 	out_fmod_dsp_metering_info.numsamples = numsamples;
-	out_fmod_dsp_metering_info.peaklevel = peaklevel;
-	out_fmod_dsp_metering_info.rmslevel = rmslevel;
+	std::copy(peaklevel, peaklevel+32, out_fmod_dsp_metering_info.peaklevel);
+	std::copy(rmslevel, rmslevel+32, out_fmod_dsp_metering_info.rmslevel);
 	out_fmod_dsp_metering_info.numchannels = numchannels;
 }
 

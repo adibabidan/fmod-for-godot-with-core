@@ -3,6 +3,7 @@
 
 #include <fmod_errors.h>
 #include <fmod_studio_common.h>
+#include <fmod_common.h>
 #include <godot_cpp/classes/character_body2d.hpp>
 #include <godot_cpp/classes/character_body3d.hpp>
 #include <godot_cpp/classes/project_settings.hpp>

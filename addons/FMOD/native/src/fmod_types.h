@@ -311,8 +311,8 @@ public:
 	int get_numchannels() const;
 	void set_defaultfrequency(int defaultfrequency);
 	int get_defaultfrequency() const;
-	void set_format(FMOD_SOUND_FORMAT format);
-	FMOD_SOUND_FORMAT get_format() const;
+	void set_format(int format);
+	int get_format() const;
 
 	void set_createsoundexinfo(const ::FMOD_CREATESOUNDEXINFO& createsoundexinfo);
 	void get_createsoundexinfo(::FMOD_CREATESOUNDEXINFO& out_createsoundexinfo) const;
@@ -343,7 +343,7 @@ public:
 
 	void set_fmod_dsp_metering_info(const ::FMOD_DSP_METERING_INFO& createsoundexinfo);
 	void get_fmod_dsp_metering_info(::FMOD_DSP_METERING_INFO& createsoundexinfo) const;
-}
+};
 
 } //namespace FmodTypes
 #endif // FMOD_TYPES_H

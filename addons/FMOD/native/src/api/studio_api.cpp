@@ -85,7 +85,7 @@ bool StudioSystem::flush_sample_loading() const
 	return ERROR_CHECK(studio_system->flushSampleLoading());
 }
 
-Ref<CoreSystem> StudioSystem::get_core_system()
+Ref<CoreApi::CoreSystem> StudioSystem::get_core_system() const
 {
 	FMOD::System* core_system = nullptr;
 	Ref<CoreApi::CoreSystem> ref = create_ref<CoreApi::CoreSystem>();
@@ -1508,7 +1508,7 @@ Ref<CoreApi::ChannelGroup> EventInstance::get_channel_group() const
 		ref->set_instance(channel_group);
 	}
 
-	return ChannelGroup;
+	return ref;
 }
 
 Dictionary EventInstance::get_min_max_distance() const
@@ -1869,7 +1869,7 @@ Ref<CoreApi::ChannelGroup> Bus::get_channel_group() const
 		ref->set_instance(channel_group);
 	}
 
-	return ChannelGroup;
+	return ref;
 }
 
 void Bus::get_cpu_usage(Dictionary cpu_usage) const

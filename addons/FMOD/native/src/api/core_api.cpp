@@ -5,6 +5,7 @@ using namespace CoreApi;
 void CoreSystem::_bind_methods()
 {
     ClassDB::bind_method(D_METHOD("create_sound", "name_or_data", "mode", "exinfo"), &CoreSystem::create_sound);
+    ClassDB::bind_method(D_METHOD("get_record_num_drivers"), &CoreSystem::get_record_num_drivers);
     ClassDB::bind_method(D_METHOD("get_record_driver_name", "id", "namelen"), &CoreSystem::get_record_driver_name);
     ClassDB::bind_method(D_METHOD("get_record_driver_rate_and_channels", "id"), &CoreSystem::get_record_driver_rate_and_channels);
     ClassDB::bind_method(D_METHOD("record_start", "id", "sound", "loop"), &CoreSystem::record_start);
@@ -32,7 +33,7 @@ Ref<Sound> CoreSystem::create_sound(const String& name_or_data, FMOD_MODE mode, 
     return ref;
 }
 
-Dictionary CoreSystem::get_record_num_drivers()
+Dictionary CoreSystem::get_record_num_drivers() const
 {
     Dictionary record_num_drivers;
 
@@ -44,19 +45,20 @@ Dictionary CoreSystem::get_record_num_drivers()
     return record_num_drivers;
 }
 
-String CoreSystem::get_record_driver_name(int id, int namelen)
+String CoreSystem::get_record_driver_name(int id, int namelen) const
 {
-    String name;
-    char buffer[namelen];
-    if(ERROR_CHECK(core_system->getRecordDriverInfo(id, &buffer, namelen, NULL, NULL, NULL, NULL, NULL)))
+	auto raw_buffer = std::string(namelen, ' ');
+    raw_buffer.resize(namelen);
+
+    if(ERROR_CHECK(core_system->getRecordDriverInfo(id, &raw_buffer[0], namelen, NULL, NULL, NULL, NULL, NULL)))
     {
-        name.assign(buffer, namelen);
+        return String(raw_buffer.c_str());
     }
 
-    return name;
+    return String();
 }
 
-Dictionary CoreSystem::get_record_driver_rate_and_channels(int id)
+Dictionary CoreSystem::get_record_driver_rate_and_channels(int id) const
 {
     Dictionary record_driver_info;
     int native_rate;
@@ -91,7 +93,7 @@ void Sound::set_instance(FMOD::Sound* sound)
     this->sound = sound;
 }
 
-FMOD::Sound* Sound::get_instance()
+FMOD::Sound* Sound::get_instance() const
 {
     return sound;
 }
