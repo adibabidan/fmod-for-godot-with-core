@@ -211,7 +211,7 @@ Ref<DSP> ChannelGroup::get_dsp(int index) const
 
 void DSP::_bind_methods()
 {
-    ClassDB::bind_method(D_METHOD("get_dsp"), &DSP::get_metering_info);
+    ClassDB::bind_method(D_METHOD("get_metering_info"), &DSP::get_metering_info);
 }
 
 void DSP::set_instance(FMOD::DSP* dsp)
