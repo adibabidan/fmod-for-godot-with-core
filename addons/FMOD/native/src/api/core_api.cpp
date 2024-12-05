@@ -40,7 +40,13 @@ Ref<Channel> CoreSystem::play_sound(const Ref<Sound>& sound, const Ref<ChannelGr
     FMOD::Channel* channel = nullptr;
     Ref<Channel> ref = create_ref<Channel>();
 
-    if(ERROR_CHECK(core_system->playSound(sound->get_instance(), 0, paused, &channel)))
+    FMOD::ChannelGroup* group = 0;
+    if(channel_group != nullptr)
+    {
+        group = channel_group->get_instance();
+    }
+
+    if(ERROR_CHECK(core_system->playSound(sound->get_instance(), group, paused, &channel)))
     {
         ref->set_instance(channel);
     }
