@@ -117,6 +117,9 @@ void Sound::_bind_methods()
 {
     ClassDB::bind_method(D_METHOD("get_length", "lengthtype"), &Sound::get_length);
     ClassDB::bind_method(D_METHOD("release"), &Sound::release);
+    ClassDB::bind_method(D_METHOD("read_data", "length"), &Sound::read_data);
+    ClassDB::bind_method(D_METHOD("lock", "offset", "length"), &Sound::lock);
+    ClassDB::bind_method(D_METHOD("unlock", "byte_arr_1", "byte_arr_2"), &Sound::unlock);
 }
 
 void Sound::set_instance(FMOD::Sound* sound)
@@ -144,6 +147,73 @@ unsigned int Sound::get_length(FMOD_TIMEUNIT lengthtype) const
 bool Sound::release() const
 {
     return ERROR_CHECK(sound->release());
+}
+
+PackedByteArray Sound::read_data(unsigned int length) const
+{
+    void* ptr = new char[length];
+    unsigned int read;
+
+    FMOD_RESULT error = sound->readData(ptr, length, &read);
+    if(error != FMOD_ERR_FILE_EOF)
+    {
+        ERROR_CHECK(error);
+    }
+
+    PackedByteArray data;
+    data.resize(read);
+
+    memcpy(data.begin().operator->(), ptr, data.size());
+    return data;
+}
+
+TypedArray<PackedByteArray> Sound::lock(unsigned int offset, unsigned int length) const
+{
+    TypedArray<PackedByteArray> ret_array = new TypedArray<PackedByteArray>();
+
+    void* ptr1;
+    void* ptr2;
+    unsigned int len1, len2;
+
+    if(ERROR_CHECK(sound->lock(offset, length, &ptr1, &ptr2, &len1, &len2)))
+    {
+        PackedByteArray arr1;
+        arr1.resize(len1);
+
+        memcpy(arr1.begin().operator->(), ptr1, arr1.size());
+        ret_array.append(arr1);
+
+        if(len2)
+        {
+            PackedByteArray arr2;
+            arr2.resize(len2);
+
+            memcpy(arr2.begin().operator->(), ptr2, arr2.size());
+            ret_array.append(arr2);
+        }
+
+        return ret_array;
+    }
+
+    return ret_array;
+}
+
+bool Sound::unlock(PackedByteArray byte_arr_1, PackedByteArray byte_arr_2) const
+{
+    void* ptr1;
+    void* ptr2;
+
+    unsigned int arr1_size = byte_arr_1.size();
+
+    ptr1 = new char[arr1_size];
+    memcpy(ptr1, byte_arr_1.begin().operator->(), arr1_size);
+
+    unsigned int arr2_size = byte_arr_2.size();
+
+    ptr2 = new char[arr2_size];
+    memcpy(ptr2, byte_arr_2.begin().operator->(), arr2_size);
+
+    return ERROR_CHECK(sound->unlock(ptr1, ptr2, arr1_size, arr2_size));
 }
 
 void Channel::_bind_methods()

@@ -51,6 +51,9 @@ public:
 
     unsigned int get_length(FMOD_TIMEUNIT lengthtype) const;
     bool release() const;
+    PackedByteArray read_data(unsigned int length) const;
+    TypedArray<PackedByteArray> lock(unsigned int offset, unsigned int length) const;
+    bool unlock(PackedByteArray byte_arr_1, PackedByteArray byte_arr_2) const;
 };
 
 class Channel : public RefCounted
