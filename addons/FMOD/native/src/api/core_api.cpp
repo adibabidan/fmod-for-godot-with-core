@@ -200,20 +200,21 @@ TypedArray<PackedByteArray> Sound::lock(unsigned int offset, unsigned int length
 
 bool Sound::unlock(PackedByteArray byte_arr_1, PackedByteArray byte_arr_2) const
 {
-    void* ptr1;
-    void* ptr2;
-
     unsigned int arr1_size = byte_arr_1.size();
-
-    ptr1 = new char[arr1_size];
-    memcpy(ptr1, byte_arr_1.begin().operator->(), arr1_size);
-
     unsigned int arr2_size = byte_arr_2.size();
 
-    ptr2 = new char[arr2_size];
+    void* ptr1 = std::malloc(arr1_size);
+    void* ptr2 = std::malloc(arr2_size);
+
+    memcpy(ptr1, byte_arr_1.begin().operator->(), arr1_size);
     memcpy(ptr2, byte_arr_2.begin().operator->(), arr2_size);
 
-    return ERROR_CHECK(sound->unlock(ptr1, ptr2, arr1_size, arr2_size));
+    bool res = ERROR_CHECK(sound->unlock(ptr1, ptr2, arr1_size, arr2_size));
+
+    std::free(ptr1);
+    std::free(ptr2);
+
+    return res;
 }
 
 void Channel::_bind_methods()
