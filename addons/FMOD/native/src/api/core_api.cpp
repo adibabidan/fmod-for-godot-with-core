@@ -208,6 +208,10 @@ bool Sound::unlock(PackedByteArray byte_arr_1, PackedByteArray byte_arr_2) const
 
     memcpy(ptr1, byte_arr_1.begin().operator->(), arr1_size);
     memcpy(ptr2, byte_arr_2.begin().operator->(), arr2_size);
+    
+    String warning_message = "c++ ptr1: " + String(static_cast<char *>(ptr1)) + ", ptr2: " + String(static_cast<char *>(ptr2));
+
+    UtilityFunctions::push_warning(warning_message);
 
     bool res = ERROR_CHECK(sound->unlock(ptr1, ptr2, arr1_size, arr2_size));
 
