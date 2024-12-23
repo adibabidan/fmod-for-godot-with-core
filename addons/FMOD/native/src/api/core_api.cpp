@@ -200,23 +200,31 @@ TypedArray<PackedByteArray> Sound::lock(unsigned int offset, unsigned int length
 
 bool Sound::unlock(PackedByteArray byte_arr_1, PackedByteArray byte_arr_2) const
 {
+    int* arr1_start = (int*) byte_arr_1.begin().operator->();
+    int* arr2_start = (int*) byte_arr_2.begin().operator->();
+
     unsigned int arr1_size = byte_arr_1.size();
     unsigned int arr2_size = byte_arr_2.size();
 
-    void* ptr1 = std::malloc(arr1_size);
-    void* ptr2 = std::malloc(arr2_size);
+    String warning_message = "Less than four bytes.";
 
-    memcpy(ptr1, byte_arr_1.begin().operator->(), arr1_size);
-    memcpy(ptr2, byte_arr_2.begin().operator->(), arr2_size);
-    
-    String warning_message = "c++ ptr1: " + String(static_cast<char *>(ptr1)) + ", ptr2: " + String(static_cast<char *>(ptr2));
+    if(arr1_size >= sizeof(int) * 4)
+    {
+        int arr1_a = (*arr1_start) & 255;
+        int arr1_b = (*arr1_start >> 4) & 255;
+        int arr1_c = (*arr1_start >> 8) & 255;
+        int arr1_d = (*arr1_start >> 12) & 255;
+
+        char arr1_char[64];
+        
+        std::sprintf(arr1_char, "C++ arr1 first four bytes: %d.%d.%d.%d", arr1_a, arr1_b, arr1_c, arr1_d);
+
+        warning_message = String(arr1_char);
+    }
 
     UtilityFunctions::push_warning(warning_message);
 
-    bool res = ERROR_CHECK(sound->unlock(ptr1, ptr2, arr1_size, arr2_size));
-
-    std::free(ptr1);
-    std::free(ptr2);
+    bool res = ERROR_CHECK(sound->unlock(byte_arr_1.begin().operator->(), byte_arr_2.begin().operator->(), arr1_size, arr2_size));
 
     return res;
 }
