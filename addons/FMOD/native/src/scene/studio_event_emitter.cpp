@@ -865,6 +865,7 @@ void StudioEventEmitter3D::_bind_methods()
 	ClassDB::bind_method(D_METHOD("get_stop_event"), &StudioEventEmitter3D::get_stop_event);
 	ClassDB::bind_method(D_METHOD("set_event", "event"), &StudioEventEmitter3D::set_event);
 	ClassDB::bind_method(D_METHOD("get_event"), &StudioEventEmitter3D::get_event);
+	ClassDB::bind_method(D_METHOD("get_event_instance"), &StudioEventEmitter3D::get_event_instance);
 	ClassDB::bind_method(D_METHOD("set_preload_samples", "preload_samples"),
 			&StudioEventEmitter3D::set_preload_samples);
 	ClassDB::bind_method(D_METHOD("get_preload_samples"), &StudioEventEmitter3D::get_preload_samples);
@@ -1049,6 +1050,11 @@ void StudioEventEmitter3D::set_event(const Ref<EventAsset>& event)
 Ref<EventAsset> StudioEventEmitter3D::get_event() const
 {
 	return implementation.event;
+}
+
+Ref<StudioApi::EventInstance> StudioEventEmitter3D::get_event_instance() const
+{
+	return implementation.event_instance;
 }
 
 void StudioEventEmitter3D::set_preload_samples(bool preload_samples)

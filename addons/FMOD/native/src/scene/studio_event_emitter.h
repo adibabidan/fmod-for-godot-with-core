@@ -141,6 +141,7 @@ public:
 
 	void set_event(const Ref<EventAsset>& event);
 	Ref<EventAsset> get_event() const;
+	Ref<StudioApi::EventInstance> get_event_instance() const;
 
 	void set_preload_samples(bool preload_samples);
 	bool get_preload_samples() const;

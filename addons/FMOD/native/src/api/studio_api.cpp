@@ -1713,12 +1713,38 @@ bool EventInstance::set_callback(Variant callable, FMOD_STUDIO_EVENT_CALLBACK_TY
 							}
 							default:
 								break;
+							case FMOD_STUDIO_EVENT_CALLBACK_CREATE_PROGRAMMER_SOUND || FMOD_STUDIO_EVENT_CALLBACK_DESTROY_PROGRAMMER_SOUND:
+							{
+								FMOD_STUDIO_PROGRAMMER_SOUND_PROPERTIES* properties =
+										static_cast<FMOD_STUDIO_PROGRAMMER_SOUND_PROPERTIES*>(parameters);
+								props["name"] = properties->name;
+								Ref<CoreApi::Sound> ref = create_ref<CoreApi::Sound>();
+								ref->set_instance((FMOD::Sound*)(properties->sound));
+								props["sound"] = ref;
+								props["subsoundIndex"] = properties->subsoundIndex;
+								break;
+							}
 						}
 
 						callback_info["properties"] = props;
 						Array args = Array();
 						args.append(callback_info);
 						callable->callv(args);
+
+						switch(type)
+						{
+							case FMOD_STUDIO_EVENT_CALLBACK_CREATE_PROGRAMMER_SOUND:
+							{
+								FMOD_STUDIO_PROGRAMMER_SOUND_PROPERTIES* properties =
+										static_cast<FMOD_STUDIO_PROGRAMMER_SOUND_PROPERTIES*>(parameters);
+						
+								props = static_cast<Dictionary>(args[0])["properties"];
+								properties->sound = (FMOD_SOUND*)(((Ref<CoreApi::Sound>)props["sound"])->get_instance());
+								properties->subsoundIndex = (int)props["subsoundIndex"];
+								break;
+							}
+						}
+
 						return FMOD_OK;
 					},
 					callback_mask));

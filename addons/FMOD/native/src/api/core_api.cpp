@@ -206,8 +206,6 @@ bool Sound::unlock(PackedByteArray byte_arr_1, PackedByteArray byte_arr_2) const
     unsigned int arr1_size = byte_arr_1.size();
     unsigned int arr2_size = byte_arr_2.size();
 
-    String warning_message = "Less than four bytes.";
-
     if(arr1_size >= sizeof(int) * 4)
     {
         int arr1_a = (*arr1_start) & 255;
@@ -216,13 +214,7 @@ bool Sound::unlock(PackedByteArray byte_arr_1, PackedByteArray byte_arr_2) const
         int arr1_d = (*arr1_start >> 12) & 255;
 
         char arr1_char[64];
-        
-        std::sprintf(arr1_char, "C++ arr1 first four bytes: %d.%d.%d.%d", arr1_a, arr1_b, arr1_c, arr1_d);
-
-        warning_message = String(arr1_char);
     }
-
-    UtilityFunctions::push_warning(warning_message);
 
     bool res = ERROR_CHECK(sound->unlock(byte_arr_1.begin().operator->(), byte_arr_2.begin().operator->(), arr1_size, arr2_size));
 
